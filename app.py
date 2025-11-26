@@ -7,8 +7,8 @@ import os
 # ===========================
 # LOAD MODEL & SCALER
 # ===========================
-model = pickle.load(open(r"C:\Users\rohan\OneDrive\Desktop\Project\model.pkl", "rb"))
-scaler = pickle.load(open(r"C:\Users\rohan\OneDrive\Desktop\Project\scaler.pkl", "rb"))
+model = pickle.load(open(r"model.pkl", "rb"))
+scaler = pickle.load(open(r"scaler.pkl", "rb"))
 
 # ===========================
 # PAGE SETUP + CUSTOM CSS
@@ -161,3 +161,4 @@ if file:
     else:
         st.error("CSV must contain 'Predicted Salary' column!")
 st.markdown("</div>", unsafe_allow_html=True)
+
