@@ -7,8 +7,8 @@ import os
 # ===========================
 # LOAD MODEL & SCALER
 # ===========================
-model = pickle.load(open(r"model.pkl", "rb"))
-scaler = pickle.load(open(r"scaler.pkl", "rb"))
+model = pickle.load(open("model.pkl", "rb"))
+scaler = pickle.load(open("scaler.pkl", "rb"))
 
 # ===========================
 # PAGE SETUP + CUSTOM CSS
@@ -58,7 +58,6 @@ h1, h2, h3, p, label, .css-1kyxreq, .css-q8sbsg {
 st.markdown("<h1 style='text-align: center;'>💼 AI Salary Predictor</h1>", unsafe_allow_html=True)
 st.markdown("<p style='text-align: center; font-size:18px;'>Smart Salary estimation based on profile data 🔥</p>",
             unsafe_allow_html=True)
-
 st.markdown("<br>", unsafe_allow_html=True)
 
 # ===========================
@@ -88,7 +87,7 @@ with col2:
 experience = st.slider("Years of Experience", min_value=0.0, max_value=50.0, step=0.5)
 st.markdown("</div>", unsafe_allow_html=True)
 
-history_file = r"C:\Users\rohan\OneDrive\Desktop\Project\salary_history.csv"
+history_file = "salary_history.csv"
 
 # ===========================
 # PREDICT BUTTON
@@ -110,6 +109,19 @@ if st.button("✨ Predict Salary"):
         f"<div class='card'><h2>💰 Estimated Salary: ₹ {real_salary:,.0f} / year</h2></div>",
         unsafe_allow_html=True)
 
+    # 📊 Single Prediction Graph Display
+    st.markdown("<div class='card'>", unsafe_allow_html=True)
+    st.subheader("📈 Salary Prediction Chart")
+
+    chart_data = pd.DataFrame({
+        "Category": ["Predicted Salary"],
+        "Salary(₹)": [real_salary]
+    })
+
+    st.bar_chart(chart_data, x="Category", y="Salary(₹)")
+    st.markdown("</div>", unsafe_allow_html=True)
+
+    # Save to History
     history_entry = pd.DataFrame([{
         "Gender": gender_options[gender],
         "Education": edu_options[edu],
@@ -161,4 +173,3 @@ if file:
     else:
         st.error("CSV must contain 'Predicted Salary' column!")
 st.markdown("</div>", unsafe_allow_html=True)
-
