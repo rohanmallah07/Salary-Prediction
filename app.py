@@ -111,23 +111,25 @@ if st.button("✨ Predict Salary"):
         unsafe_allow_html=True)
 
     # ===========================
-    # Compact & Beautiful Graph
+    # Beautiful Graph
     # ===========================
     st.markdown("<div class='card'>", unsafe_allow_html=True)
     st.subheader("📈 Salary Prediction Graph")
 
-    fig, ax = plt.subplots(figsize=(4, 4))  # 🔹 Smaller size
-    bars = ax.bar(["Predicted Salary"], [real_salary], color="deepskyblue")
+    fig, ax = plt.subplots(figsize=(6, 5))
+    bars = ax.bar(["Predicted Salary"], [real_salary])
 
-    # Style
+    # 🟦 Style
     ax.set_facecolor("#161b22")
     fig.patch.set_facecolor("#161b22")
     ax.tick_params(colors="white")
     ax.set_ylabel("Salary (₹)", color="white")
 
-    # Value Label
-    yval = bars[0].get_height()
-    ax.text(0, yval + (yval * 0.02), f"₹ {yval:,.0f}", ha="center", color="cyan", fontsize=12)
+    # Show Value on Top
+    for bar in bars:
+        yval = bar.get_height()
+        ax.text(bar.get_x() + bar.get_width()/2, yval + 1000,
+                f"₹ {yval:,.0f}", ha="center", color="cyan", fontsize=12)
 
     st.pyplot(fig)
     st.markdown("</div>", unsafe_allow_html=True)
