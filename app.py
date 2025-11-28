@@ -3,7 +3,6 @@ import numpy as np
 import pickle
 import pandas as pd
 import os
-import matplotlib.pyplot as plt
 
 # ===========================
 # LOAD MODEL & SCALER
@@ -110,28 +109,16 @@ if st.button("✨ Predict Salary"):
         f"<div class='card'><h2>💰 Estimated Salary: ₹ {real_salary:,.0f} / year</h2></div>",
         unsafe_allow_html=True)
 
-    # ===========================
-    # Beautiful Graph
-    # ===========================
+    # 📊 Single Prediction Graph Display
     st.markdown("<div class='card'>", unsafe_allow_html=True)
-    st.subheader("📈 Salary Prediction Graph")
+    st.subheader("📈 Salary Prediction Chart")
 
-    fig, ax = plt.subplots(figsize=(6, 5))
-    bars = ax.bar(["Predicted Salary"], [real_salary])
+    chart_data = pd.DataFrame({
+        "Category": ["Predicted Salary"],
+        "Salary(₹)": [real_salary]
+    })
 
-    # 🟦 Style
-    ax.set_facecolor("#161b22")
-    fig.patch.set_facecolor("#161b22")
-    ax.tick_params(colors="white")
-    ax.set_ylabel("Salary (₹)", color="white")
-
-    # Show Value on Top
-    for bar in bars:
-        yval = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width()/2, yval + 1000,
-                f"₹ {yval:,.0f}", ha="center", color="cyan", fontsize=12)
-
-    st.pyplot(fig)
+    st.bar_chart(chart_data, x="Category", y="Salary(₹)")
     st.markdown("</div>", unsafe_allow_html=True)
 
     # Save to History
